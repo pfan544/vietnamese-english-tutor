@@ -26,7 +26,7 @@ PATTERNS=(
 for entry in "${PATTERNS[@]}"; do
   LABEL="${entry%%|*}"
   REGEX="${entry#*|}"
-  if echo "$CMD" | grep -qE "$REGEX"; then
+  if echo "$CMD" | grep -qE -- "$REGEX"; then
     echo "BLOCKED: ${LABEL}" >&2
     echo "Command: ${CMD}" >&2
     echo "If this is genuinely intentional, run it manually outside Claude Code." >&2
