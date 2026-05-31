@@ -21,9 +21,29 @@ Next.js 15 + App Router + TypeScript + Tailwind 4 skeleton created via `create-n
 - Added DEVLOG.md (this file).
 - Added project to Claude auto-memory at `C:\Users\paulf\.claude\projects\C--Program-Files-Git\memory\project_vietnamese_tutor.md` so any future Claude session in any tool can find it.
 
+## 2026-05-28 — Config & hook fixes (commit `6be82f5`)
+
+- `settings.json`: appended `.json` to the `$schema` URL so `/doctor` validates it.
+- `check-bash-safety.sh`: pass `--` to grep so patterns starting with `--` aren't interpreted as flags.
+- `.gitignore`: now ignores `.claude/settings.local.json` and `.claude/.cache/`.
+
+## 2026-05-30 — First flashcard deck (commit `ebe8165`)
+
+Replaced create-next-app boilerplate with a working Vietnamese→English recognition flow.
+
+- 8 cards, each targeting a CLAUDE.md-documented final-cluster confusion: `/ts/`, `/vd/`, `/fθ/`, `/skt/`, `/sts/`, `/ʃt/`, `/ðz/`, `/lpt/`.
+- Distractors are real English words chosen to surface each card's specific L1 confusion (cat vs cats, move vs moved, close vs clothes).
+- Past-tense cards use a short Vietnamese sentence frame so the `đã` marker reads naturally.
+- Seeded LCG shuffle keyed off card index — server and client render the same button order (no hydration mismatch), and re-renders don't reshuffle.
+- Tailwind-only styling, mobile-friendly, `aria-live` on feedback.
+- Page title/meta updated to "VietEnglish — Flashcards".
+- Still client-only. No persistence, no SRS, no audio yet.
+
 ## Next up
 
+- [ ] **Deploy to Vercel** so wife in Vietnam can test and give feedback (decided 2026-05-30).
 - [ ] Recover and paste the May 26 desktop-app conversation recap (see top of file).
 - [ ] Wire Supabase project + first migration (must include `unaccent` extension + ICU collation per CLAUDE.md).
 - [ ] Pick one: Drizzle vs Supabase generated client. CLAUDE.md says pick and stick.
-- [ ] Replace boilerplate `app/page.tsx` with real landing.
+- [ ] Add audio (Web Speech API first, Google Cloud TTS fallback for `vi-VN`).
+- [ ] Expand deck beyond final clusters: onset clusters, voiced/voiceless contrasts, dental fricatives, tense/lax vowels.
