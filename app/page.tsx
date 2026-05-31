@@ -17,70 +17,72 @@ type Card = {
 // (dropped final consonants, collapsed clusters, voicing swaps). Past-tense
 // verbs use a short Vietnamese sentence frame so the `đã` marker reads
 // naturally; bare-noun cards stay bare. All distractors are real English
-// words — no invented spellings.
+// words — no invented spellings. `targetSound` and `tip` are written
+// natively in Vietnamese so an A2–B1 learner reads them in their L1; do not
+// translate them to English.
 const DECK: Card[] = [
   {
     vietnamese: "những con mèo",
     english: "cats",
     ipa: "/kæts/",
-    targetSound: "final /ts/ cluster",
-    tip: "Don't drop the final -s — it marks the plural.",
+    targetSound: "cụm /ts/ cuối",
+    tip: "Đừng bỏ âm -s cuối — nó đánh dấu số nhiều.",
     choices: ["cats", "cat", "cads", "cuts"],
   },
   {
     vietnamese: "Tôi đã chuyển nhà",
     english: "moved",
     ipa: "/muːvd/",
-    targetSound: "final /vd/ cluster",
-    tip: "Both /v/ and /d/ must land — don't collapse it to 'move'.",
+    targetSound: "cụm /vd/ cuối",
+    tip: "Phải bật rõ cả /v/ và /d/ — đừng đọc thành 'move'.",
     choices: ["moved", "move", "moves", "mood"],
   },
   {
     vietnamese: "lần thứ năm",
     english: "fifth",
     ipa: "/fɪfθ/",
-    targetSound: "final /fθ/ cluster",
-    tip: "Tongue tip to the teeth for /θ/ — not /f/, not /s/.",
+    targetSound: "cụm /fθ/ cuối",
+    tip: "Đầu lưỡi chạm răng để bật /θ/ — không phải /f/, không phải /s/.",
     choices: ["fifth", "fifths", "fits", "fit"],
   },
   {
     vietnamese: "Tôi đã hỏi cô ấy",
     english: "asked",
     ipa: "/æskt/",
-    targetSound: "final /skt/ cluster",
-    tip: "Say all three: /s/-/k/-/t/. Don't smush them together.",
+    targetSound: "cụm /skt/ cuối",
+    tip: "Đọc rõ cả ba âm: /s/-/k/-/t/. Đừng dồn lại.",
     choices: ["asked", "ask", "asks", "act"],
   },
   {
     vietnamese: "các bài kiểm tra",
     english: "tests",
     ipa: "/tɛsts/",
-    targetSound: "final /sts/ cluster",
-    tip: "Slow down — three separate sounds: /s/-/t/-/s/.",
+    targetSound: "cụm /sts/ cuối",
+    tip: "Chậm lại — ba âm tách biệt: /s/-/t/-/s/.",
     choices: ["tests", "test", "texts", "tents"],
   },
   {
     vietnamese: "Tôi đã ước như vậy",
     english: "wished",
     ipa: "/wɪʃt/",
-    targetSound: "final /ʃt/ cluster",
-    tip: "End on a crisp /t/ — don't let it fade.",
+    targetSound: "cụm /ʃt/ cuối",
+    tip: "Kết thúc bằng /t/ rõ nét — đừng để âm tắt dần.",
     choices: ["wished", "wish", "wishes", "washed"],
   },
   {
     vietnamese: "quần áo",
     english: "clothes",
     ipa: "/kloʊðz/",
-    targetSound: "final /ðz/ cluster",
-    tip: "Keep voice on through /ð/ and /z/ — it's not 'close'.",
+    targetSound: "cụm /ðz/ cuối",
+    tip: "Giữ thanh hữu qua /ð/ và /z/ — không phải 'close'.",
     choices: ["clothes", "close", "cloth", "cloths"],
   },
   {
     vietnamese: "Tôi đã giúp cô ấy",
     english: "helped",
     ipa: "/hɛlpt/",
-    targetSound: "final /lpt/ cluster",
-    tip: "Finish on /t/ — 'helpt', not 'help'.",
+    targetSound: "cụm /lpt/ cuối",
+    tip: "Kết bằng /t/ — 'helpt', không phải 'help'.",
     choices: ["helped", "help", "helps", "hopped"],
   },
 ];
@@ -136,17 +138,20 @@ export default function Home() {
       <main className="flex min-h-full flex-1 flex-col items-center justify-center bg-slate-50 px-4 py-10">
         <div className="flex w-full max-w-md flex-col items-center gap-6 rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Done
+            Xong
           </p>
           <p className="text-4xl font-semibold tracking-tight text-slate-800">
-            {correctCount} of {DECK.length} correct
+            <span lang="en" translate="no">
+              {correctCount} / {DECK.length}
+            </span>{" "}
+            câu đúng
           </p>
           <button
             type="button"
             onClick={handleReset}
             className="min-h-12 rounded-2xl bg-sky-500 px-6 text-base font-semibold text-white transition-colors hover:bg-sky-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-200"
           >
-            Review again
+            Ôn lại
           </button>
         </div>
       </main>
@@ -162,7 +167,10 @@ export default function Home() {
       <div className="flex w-full max-w-md flex-col gap-6">
         <div className="flex flex-col gap-2">
           <p className="text-center text-sm font-medium text-slate-500">
-            Card {index + 1} of {DECK.length}
+            Thẻ{" "}
+            <span lang="en" translate="no">
+              {index + 1} / {DECK.length}
+            </span>
           </p>
           <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
             <div
@@ -174,10 +182,11 @@ export default function Home() {
 
         <div className="flex min-h-40 w-full flex-col items-center justify-center gap-2 rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm">
           <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
-            Vietnamese
+            Tiếng Việt
           </span>
           <span
             lang="vi"
+            translate="no"
             className="text-3xl font-semibold tracking-tight text-slate-800"
           >
             {card!.vietnamese}
@@ -186,7 +195,7 @@ export default function Home() {
 
         <div
           role="group"
-          aria-label="English answer choices"
+          aria-label="Lựa chọn tiếng Anh"
           className="grid grid-cols-1 gap-3 sm:grid-cols-2"
         >
           {shuffledChoices.map((choice) => {
@@ -213,7 +222,8 @@ export default function Home() {
                 onClick={() => handleSelect(choice)}
                 disabled={isAnswered}
                 lang="en"
-                className={`min-h-14 rounded-2xl border-2 px-4 text-lg font-semibold transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-200 disabled:cursor-default ${stateClass}`}
+                translate="no"
+                className={`notranslate min-h-14 rounded-2xl border-2 px-4 text-lg font-semibold transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-200 disabled:cursor-default ${stateClass}`}
               >
                 {choice}
               </button>
@@ -231,15 +241,22 @@ export default function Home() {
                 isCorrect ? "text-emerald-700" : "text-rose-700"
               }`}
             >
-              {isCorrect ? "Correct" : "Not quite"}
+              {isCorrect ? "Đúng rồi" : "Chưa đúng"}
             </p>
             <p
               lang="en"
-              className="text-4xl font-semibold tracking-tight text-slate-800"
+              translate="no"
+              className="notranslate text-4xl font-semibold tracking-tight text-slate-800"
             >
               {card.english}
             </p>
-            <p className="font-mono text-xl text-slate-600">{card.ipa}</p>
+            <p
+              lang="en"
+              translate="no"
+              className="notranslate font-mono text-xl text-slate-600"
+            >
+              {card.ipa}
+            </p>
             <span className="rounded-full bg-sky-50 px-3 py-1 text-sm font-medium text-sky-700">
               {card.targetSound}
             </span>
@@ -251,7 +268,7 @@ export default function Home() {
               onClick={handleNext}
               className="mt-2 min-h-12 rounded-2xl bg-slate-800 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-200"
             >
-              {index === DECK.length - 1 ? "Finish" : "Next"}
+              {index === DECK.length - 1 ? "Hoàn thành" : "Tiếp theo"}
             </button>
           </div>
         )}
